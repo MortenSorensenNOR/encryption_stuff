@@ -1,7 +1,7 @@
 import math
 
 MODULUS = 17
-GEN     = 13
+GEN     = 9
 
 def brv(x, n):
     return int(''.join(reversed(bin(x)[2:].zfill(n))), 2)
@@ -68,7 +68,11 @@ def intt_iter(a, gen=GEN, modulus=MODULUS):
     scaler = pow(deg_d, -1, modulus)
     return [(res[brv(i, nbits)] * scaler) % modulus for i in range(deg_d)]
 
-a      = [1, 2, 3, 4]
-a_hat  = ntt_iter(a)
-a_intt = intt_iter(a_hat)
-print(a, a_hat, a_intt)
+a     = [1, 2, 3, 4, 0, 0, 0, 0]
+b     = [4, 2, 1, 8, 0, 0, 0, 0]
+a_hat = ntt_iter(a)
+b_hat = ntt_iter(b)
+c_hat = [a_hat[i] * b_hat[i] % MODULUS for i in range(len(a))] 
+
+c = intt_iter(c_hat)
+print(a, b, c)
